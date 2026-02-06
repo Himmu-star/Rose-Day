@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RuHi’s Mathematical Flower 🌸</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #fff0f3;
+            --rose-petal: #ff85a1;
+            --lavender: #e0d7ff;
+            --gold: #f9dcc4;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at center, #fff0f3 0%, #ffdae9 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            color: #5d4a66;
+        }
+
+        #math-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .ui-content {
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .ui-content * {
+            pointer-events: auto;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: #c9184a;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(255, 77, 109, 0.2);
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .sub-line {
+            font-family: 'Quicksand', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            max-width: 700px;
+            color: #7d5a8a;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        /* Symbol Animation */
+        .math-symbol {
+            position: fixed;
+            pointer-events: none;
+            color: rgba(201, 24, 74, 0.15);
+            font-family: serif;
+            z-index: 0;
+            animation: floatSymbol linear infinite;
+        }
+
+        @keyframes floatSymbol {
+            from { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Buttons and Controls */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 30rem; /* Space for the canvas flower */
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .pattern-btn {
+            background: white;
+            border: 2px solid var(--rose-petal);
+            color: #c9184a;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .pattern-btn:hover {
+            background: var(--rose-petal);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .pattern-btn.active {
+            background: #c9184a;
+            color: white;
+            border-color: #c9184a;
+        }
+
+        .nav-links {
+            margin-top: 3rem;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .next-btn {
+            background: linear-gradient(to right, #ff4d6d, #ff85a1);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        .next-btn:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.5);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.8);
+            color: #c9184a;
+            border: 1px solid rgba(201, 24, 74, 0.2);
+        }
+
+        .back-btn:hover {
+            background: white;
+            transform: translateX(-10px);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            margin-top: 4rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: #c9184a;
+        }
+
+        .heart-burst {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.5rem;
+            z-index: 100;
+            animation: burst 0.8s ease-out forwards;
+        }
+
+        @keyframes burst {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2) translateY(-50px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="math-canvas"></canvas>
+
+    <div class="ui-content">
+        <h1>RuHi’s Mathematical Flower 🌸</h1>
+        <p class="sub-line">
+            Sona, yeh flower pure mathematics se bana hai… bilkul hamare pyaar ki tarah — beautiful, balanced, and infinite.
+        </p>
+
+        <div class="controls">
+            <button class="pattern-btn active" onclick="setPattern('rose')">Rose Curve</button>
+            <button class="pattern-btn" onclick="setPattern('heart')">Heart Polar</button>
+            <button class="pattern-btn" onclick="setPattern('mandala')">Mandala Curve</button>
+        </div>
+
+        <div class="nav-links">
+            <button class="nav-btn back-btn" onclick="location.href='rose.html'">
+                ← Back to Rose
+            </button>
+            <button class="nav-btn next-btn" onclick="location.href='infinity.html'">
+                Next → Infinity Flower ♾️
+            </button>
+        </div>
+
+        <footer>
+            “Made for RuHi, because even mathematics looks beautiful with you.”
+        </footer>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('math-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, centerX, centerY;
+        let time = 0;
+        let currentPattern = 'rose';
+        let mouseParticles = [];
+
+        // Audio Placeholder (Chime sound)
+        const chime = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+        chime.volume = 0.2;
+
+        function init() {
+            resize();
+            createSymbols();
+            animate();
+        }
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            centerX = width / 2;
+            centerY = height / 2.5; // Positioning flower higher up
+        }
+
+        window.addEventListener('resize', resize);
+
+        // Mathematical Symbols Background
+        function createSymbols() {
+            const symbols = ['∞', 'π', 'Σ', '√', 'θ', '+', '×', '♥'];
+            for (let i = 0; i < 20; i++) {
+                const el = document.createElement('div');
+                el.className = 'math-symbol';
+                el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = Math.random() * 20 + 20 + 'px';
+                el.style.animationDuration = Math.random() * 10 + 10 + 's';
+                el.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(el);
+            }
+        }
+
+        function setPattern(p) {
+            currentPattern = p;
+            document.querySelectorAll('.pattern-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase().includes(p)) btn.classList.add('active');
+            });
+            chime.currentTime = 0;
+            chime.play();
+        }
+
+        // Heart Burst on Click
+        window.addEventListener('click', (e) => {
+            const burst = document.createElement('div');
+            burst.className = 'heart-burst';
+            burst.innerHTML = '❤️';
+            burst.style.left = e.clientX + 'px';
+            burst.style.top = e.clientY + 'px';
+            document.body.appendChild(burst);
+            setTimeout(() => burst.remove(), 800);
+        });
+
+        function drawFlower() {
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            
+            // Rotation and Breathing effect
+            const rotation = time * 0.2;
+            const breathe = 1 + Math.sin(time * 0.5) * 0.05;
+            ctx.rotate(rotation);
+            ctx.scale(breathe, breathe);
+
+            ctx.beginPath();
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = 'rgba(255, 77, 109, 0.6)';
+
+            const points = 1000;
+            const scale = Math.min(width, height) * 0.25;
+
+            for (let i = 0; i <= points; i++) {
+                const theta = (i / points) * Math.PI * 10;
+                let r;
+
+                if (currentPattern === 'rose') {
+                    // r = a * cos(k * theta)
+                    r = scale * Math.cos(7 * theta);
+                    ctx.strokeStyle = `hsla(${340 + Math.sin(time)*20}, 80%, 60%, 0.8)`;
+                } else if (currentPattern === 'heart') {
+                    // Polar Heart: r = sin(theta) * sqrt(abs(cos(theta))) / (sin(theta) + 7/5) - 2*sin(theta) + 2
+                    // Simplified: 1 - sin(theta)
+                    r = scale * 0.8 * (1 - Math.sin(theta));
+                    ctx.strokeStyle = `hsla(350, 90%, 50%, 0.8)`;
+                } else {
+                    // Mandala: r = 1 + 0.5 * sin(12 * theta)
+                    r = scale * (1 + 0.3 * Math.sin(12 * theta + time));
+                    ctx.strokeStyle = `hsla(280, 70%, 70%, 0.8)`;
+                }
+
+                const x = r * Math.cos(theta);
+                const y = r * Math.sin(theta);
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+
+            // Outer glow lines
+            ctx.stroke();
+
+            // Inner fill with gold accent
+            ctx.globalAlpha = 0.1;
+            ctx.fillStyle = '#f9dcc4';
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function drawSparkles() {
+            // Tiny sparkles logic
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            for(let i=0; i<10; i++) {
+                const x = centerX + Math.cos(time + i) * 200 * Math.sin(time*0.5);
+                const y = centerY + Math.sin(time + i) * 200;
+                ctx.beginPath();
+                ctx.arc(x, y, 1.5, 0, Math.PI*2);
+                ctx.fill();
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Soft gradient background for canvas
+            const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, width/2);
+            grad.addColorStop(0, 'rgba(255, 240, 243, 0)');
+            grad.addColorStop(1, 'rgba(255, 218, 233, 0.2)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
+
+            drawFlower();
+            drawSparkles();
+
+            time += 0.02;
+            requestAnimationFrame(animate);
+        }
+
+        init();
+    </script>
+</body>
+</html>
