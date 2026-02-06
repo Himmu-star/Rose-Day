@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RuHi’s Infinity Flower ♾️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --lavender: #f3e5f5;
+            --rose: #ffc1e3;
+            --deep-rose: #c9184a;
+            --gold: #ffd700;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f3e5f5 0%, #ffdae9 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            color: #4a0e1c;
+        }
+
+        #infinity-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .ui-wrapper {
+            position: relative;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .ui-wrapper * {
+            pointer-events: auto;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--deep-rose);
+            margin-top: 10vh;
+            animation: floatUpDown 4s ease-in-out infinite;
+            text-shadow: 0 4px 10px rgba(201, 24, 74, 0.2);
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .sub-line {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: #7d5a8a;
+            max-width: 600px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .bg-infinity {
+            position: fixed;
+            font-size: 5rem;
+            color: rgba(201, 24, 74, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            animation: shimmer 5s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        /* Controls */
+        .mode-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid var(--rose);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--deep-rose);
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .mode-btn:hover { transform: scale(1.05); background: white; }
+        .mode-btn.active {
+            background: var(--deep-rose);
+            color: white;
+            border-color: var(--deep-rose);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 5vh;
+        }
+
+        .pill-btn {
+            background: linear-gradient(45deg, var(--deep-rose), #ff85a1);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(201, 24, 74, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pill-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(201, 24, 74, 0.5);
+        }
+
+        .pill-btn-alt {
+            background: linear-gradient(45deg, #9575cd, var(--rose));
+        }
+
+        footer {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--deep-rose);
+            margin-bottom: 2vh;
+        }
+
+        .heart-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: heartFadeUp 1s ease-out forwards;
+            font-size: 1.5rem;
+        }
+
+        @keyframes heartFadeUp {
+            0% { transform: scale(0) translateY(0); opacity: 1; }
+            100% { transform: scale(1.5) translateY(-100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="infinity-canvas"></canvas>
+
+    <div class="ui-wrapper">
+        <div class="top-section">
+            <h1>RuHi’s Infinity Flower ♾️🌸</h1>
+            <p class="sub-line">
+                “Jitni baar yeh loop chalega… utni baar main aapse aur zyada pyaar karunga.”
+            </p>
+        </div>
+
+        <div class="bottom-section flex flex-col items-center">
+            <div class="mode-selector">
+                <button class="mode-btn active" onclick="setMode('glow')">Infinity Glow</button>
+                <button class="mode-btn" onclick="setMode('mandala')">Mandala Loop</button>
+                <button class="mode-btn" onclick="setMode('double')">Double Infinity</button>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="pill-btn pill-btn-alt" onclick="location.href='mathflower.html'">
+                    ← Back
+                </button>
+                <button class="pill-btn" onclick="location.href='civilflower.html'">
+                    Next → Civil Engineer Flower 👷‍♀️🌺
+                </button>
+            </div>
+
+            <footer>
+                “RuHi, my love for you has no end — just like this infinity flower.”
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('infinity-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, centerX, centerY;
+        let time = 0;
+        let particles = [];
+        let mode = 'glow';
+        const chime = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+        chime.volume = 0.1;
+
+        function init() {
+            resize();
+            createBackgroundSymbols();
+            animate();
+        }
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            centerX = width / 2;
+            centerY = height / 2;
+        }
+
+        window.addEventListener('resize', resize);
+
+        function createBackgroundSymbols() {
+            for(let i=0; i<15; i++) {
+                const span = document.createElement('div');
+                span.className = 'bg-infinity';
+                span.innerHTML = '♾️';
+                span.style.left = Math.random() * 90 + 'vw';
+                span.style.top = Math.random() * 90 + 'vh';
+                span.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(span);
+            }
+        }
+
+        function setMode(m) {
+            mode = m;
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.toLowerCase().includes(m)) btn.classList.add('active');
+            });
+            chime.currentTime = 0;
+            chime.play();
+            particles = []; // Reset particles for new mode
+        }
+
+        window.addEventListener('click', (e) => {
+            for(let i=0; i<5; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = '♾️❤️';
+                heart.style.left = (e.clientX + (Math.random()-0.5)*50) + 'px';
+                heart.style.top = (e.clientY + (Math.random()-0.5)*50) + 'px';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 1000);
+            }
+        });
+
+        function getLemniscate(t, scale) {
+            // Lemniscate of Bernoulli
+            const cosT = Math.cos(t);
+            const sinT = Math.sin(t);
+            const denom = 1 + sinT * sinT;
+            return {
+                x: (scale * cosT) / denom,
+                y: (scale * cosT * sinT) / denom
+            };
+        }
+
+        function drawInfinityFlower() {
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            
+            // Pulsing breathe effect
+            const breathe = 1 + Math.sin(time * 2) * 0.03;
+            ctx.scale(breathe, breathe);
+            ctx.rotate(time * 0.1);
+
+            const scale = Math.min(width, height) * 0.35;
+            
+            // Draw path
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(201, 24, 74, 0.1)';
+            for(let t=0; t<Math.PI*2; t+=0.05) {
+                const p = getLemniscate(t, scale);
+                if(t === 0) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            }
+            ctx.stroke();
+
+            // Glow particles along path
+            const count = mode === 'double' ? 120 : 80;
+            for(let i=0; i<count; i++) {
+                const tOffset = (i / count) * Math.PI * 2 + time;
+                const p = getLemniscate(tOffset, scale);
+                
+                // Color switching based on mode
+                let hue;
+                if(mode === 'glow') hue = 340 + Math.sin(time + i)*20;
+                else if(mode === 'mandala') hue = 40 + Math.sin(time)*10; // Goldish
+                else hue = 280 + Math.sin(time)*40; // Purple/Pink
+
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = `hsla(${hue}, 80%, 60%, 0.8)`;
+                ctx.fillStyle = `hsla(${hue}, 80%, 70%, 0.9)`;
+                
+                // Drawing petal shapes
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(tOffset + Math.PI/2);
+                
+                if(mode === 'mandala') {
+                    // Draw tiny triangles/diamonds
+                    ctx.beginPath();
+                    ctx.moveTo(0, -10);
+                    ctx.lineTo(5, 0);
+                    ctx.lineTo(0, 10);
+                    ctx.lineTo(-5, 0);
+                    ctx.fill();
+                } else {
+                    // Draw soft circles (particles)
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 4 + Math.sin(time*5 + i)*2, 0, Math.PI*2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+
+            // Central Bloom Pulse
+            const bloomSize = 20 + Math.sin(time * 3) * 5;
+            const grd = ctx.createRadialGradient(0, 0, 0, 0, 0, bloomSize * 2);
+            grd.addColorStop(0, 'rgba(255, 215, 0, 0.6)');
+            grd.addColorStop(1, 'rgba(201, 24, 74, 0)');
+            ctx.fillStyle = grd;
+            ctx.beginPath();
+            ctx.arc(0, 0, bloomSize * 2, 0, Math.PI*2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function drawSparkles() {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            for(let i=0; i<8; i++) {
+                const x = Math.random() * width;
+                const y = Math.random() * height;
+                const s = Math.random() * 2;
+                if(Math.random() > 0.95) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, s, 0, Math.PI*2);
+                    ctx.fill();
+                }
+            }
+        }
+
+        function animate() {
+            // Clearing with slight trails
+            ctx.fillStyle = 'rgba(243, 229, 245, 0.15)';
+            ctx.fillRect(0, 0, width, height);
+
+            drawInfinityFlower();
+            drawSparkles();
+
+            time += 0.015;
+            requestAnimationFrame(animate);
+        }
+
+        init();
+    </script>
+</body>
+</html>
