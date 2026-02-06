@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civil Engineer Flower — For My RuHi 👷‍♀️🌸</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blueprint-blue: #1a3a5f;
+            --blueprint-line: rgba(255, 255, 255, 0.2);
+            --safety-yellow: #ffd60a;
+            --rose-gold: #e29578;
+            --concrete-grey: #adb5bd;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a3a5f 0%, #2c5364 100%);
+            font-family: 'Quicksand', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Blueprint Grid Effect */
+        .blueprint-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(var(--blueprint-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--blueprint-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating Construction Icons */
+        .icon-float {
+            position: fixed;
+            opacity: 0.1;
+            z-index: 0;
+            animation: rotateIcon 10s linear infinite;
+        }
+
+        @keyframes rotateIcon {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .ui-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            color: var(--safety-yellow);
+            text-shadow: 0 0 15px rgba(255, 214, 10, 0.5);
+            animation: craneLift 4s ease-in-out infinite;
+        }
+
+        @keyframes craneLift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .sub-line {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            max-width: 600px;
+            margin-top: 1rem;
+            color: #d1d1d1;
+            font-weight: 300;
+        }
+
+        /* Flower Canvas */
+        #civil-canvas {
+            cursor: crosshair;
+            margin: 20px 0;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+        }
+
+        /* CAD Bar */
+        .cad-bar {
+            background: #000;
+            color: #0f0;
+            font-family: monospace;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            width: 250px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+
+        .cad-bar span { animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Navigation */
+        .nav-zone {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .eng-btn {
+            background: var(--safety-yellow);
+            color: #000;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #000;
+            box-shadow: 4px 4px 0px #000;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .eng-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #000;
+            animation: vibrate 0.1s linear infinite;
+        }
+
+        @keyframes vibrate {
+            0% { transform: translate(1px, 1px); }
+            50% { transform: translate(-1px, -1px); }
+            100% { transform: translate(1px, -1px); }
+        }
+
+        footer {
+            margin-top: 40px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--rose-gold);
+        }
+
+        .concrete-block {
+            position: absolute;
+            pointer-events: none;
+            background: #adb5bd;
+            border: 1px solid #495057;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #343a40;
+            animation: blockDrop 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes blockDrop {
+            0% { transform: translateY(-50px) scale(0); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blueprint-bg"></div>
+    
+    <!-- Decorative Floating Icons -->
+    <div class="icon-float" style="top:10%; left:5%;">🏗️</div>
+    <div class="icon-float" style="top:20%; right:10%;">📐</div>
+    <div class="icon-float" style="bottom:15%; left:12%;">⚙️</div>
+    <div class="icon-float" style="bottom:25%; right:8%;">🪜</div>
+
+    <div class="ui-container">
+        <div class="header-box">
+            <h1>Civil Engineer Flower — For My RuHi 👷‍♀️🌸</h1>
+            <p class="sub-line">
+                “Your stability… your patience… your strength… Sona, aap meri life ka foundation ho.”
+            </p>
+        </div>
+
+        <canvas id="civil-canvas"></canvas>
+
+        <div class="cad-bar" id="cad-text">
+            COMMAND: LOVE<span>_</span>
+        </div>
+
+        <div class="nav-zone">
+            <button class="eng-btn" onclick="location.href='infinity.html'">← Back</button>
+            <button class="eng-btn" onclick="location.href='gallery.html'">Next → Gallery 📸</button>
+        </div>
+
+        <footer>
+            “RuHi, you are the strongest and most beautiful structure in my life.”
+        </footer>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('civil-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let time = 0;
+        const chime = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+        chime.volume = 0.05;
+
+        function init() {
+            resize();
+            animate();
+        }
+
+        function resize() {
+            const size = Math.min(window.innerWidth * 0.8, 400);
+            width = canvas.width = size;
+            height = canvas.height = size;
+        }
+
+        window.addEventListener('resize', resize);
+
+        // Interaction: Concrete Heart Blocks
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            for(let i=0; i<3; i++) {
+                const block = document.createElement('div');
+                block.className = 'concrete-block';
+                block.innerHTML = '❤️';
+                block.style.width = '20px';
+                block.style.height = '15px';
+                block.style.left = (e.clientX + (Math.random()-0.5)*40) + 'px';
+                block.style.top = (e.clientY + (Math.random()-0.5)*40) + 'px';
+                document.body.appendChild(block);
+                setTimeout(() => block.remove(), 2000);
+            }
+            updateCAD("BLOCKS STACKED ✔");
+        });
+
+        canvas.addEventListener('dblclick', () => {
+            updateCAD("FOUNDATION CREATED ✔");
+        });
+
+        function updateCAD(msg) {
+            const bar = document.getElementById('cad-text');
+            bar.innerHTML = `LOV>${msg}<span>_</span>`;
+            chime.play();
+            setTimeout(() => {
+                bar.innerHTML = `COMMAND: LOVE<span>_</span>`;
+            }, 3000);
+        }
+
+        function drawEngineeringFlower() {
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = width * 0.35;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // 1. Draw Outer Gear Rim
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(time * 0.5);
+            ctx.strokeStyle = '#adb5bd';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            
+            ctx.beginPath();
+            for(let i=0; i<360; i+=10) {
+                const ang = i * Math.PI / 180;
+                const r = radius + (i % 20 === 0 ? 15 : 0);
+                const x = Math.cos(ang) * r;
+                const y = Math.sin(ang) * r;
+                if(i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.stroke();
+            ctx.restore();
+
+            // 2. Draw Bridge-Arch Petals
+            const petalCount = 8;
+            for(let i=0; i<petalCount; i++) {
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate((i * Math.PI * 2 / petalCount) + time * 0.2);
+                
+                // Arch outline (CAD Style)
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(radius/2, -radius, radius, -radius/2, radius, 0);
+                ctx.bezierCurveTo(radius, radius/2, radius/2, radius, 0, 0);
+                
+                ctx.strokeStyle = i % 2 === 0 ? '#ff85a1' : '#ffd60a';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([]);
+                ctx.stroke();
+
+                // RCC Cross lines inside petal
+                ctx.beginPath();
+                ctx.globalAlpha = 0.3;
+                for(let j=10; j<radius; j+=15) {
+                    ctx.moveTo(j, -5);
+                    ctx.lineTo(j, 5);
+                }
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // 3. Central Roundabout (Core)
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(-time * 1);
+            
+            // Outer ring of core
+            ctx.beginPath();
+            ctx.arc(0, 0, 30, 0, Math.PI * 2);
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Internal "spokes"
+            ctx.beginPath();
+            for(let i=0; i<4; i++) {
+                ctx.rotate(Math.PI/2);
+                ctx.moveTo(0, 0);
+                ctx.lineTo(25, 0);
+            }
+            ctx.stroke();
+
+            // Heart in center
+            ctx.fillStyle = '#ff4d6d';
+            ctx.font = '20px serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('❤️', 0, 0);
+            ctx.restore();
+
+            // 4. Measuring Tape (Simulated)
+            ctx.strokeStyle = '#ffd60a';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX + Math.cos(time) * radius, centerY + Math.sin(time) * radius);
+            ctx.stroke();
+        }
+
+        function animate() {
+            drawEngineeringFlower();
+            time += 0.01;
+            requestAnimationFrame(animate);
+        }
+
+        init();
+    </script>
+</body>
+</html>
