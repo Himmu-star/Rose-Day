@@ -4,420 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rishu ka Rose Garden — For My RuHi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --soft-pink: #ffdae9;
-            --rose-gold: #fbc2eb;
-            --soft-lavender: #e0d7ff;
-            --rose-red: #ff4d6d;
-            --deep-rose: #c9184a;
-        }
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
         body {
             margin: 0;
             padding: 0;
-            /* Scroll enable kar diya hai ab */
-            overflow-y: auto; 
-            overflow-x: hidden;
-            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--rose-gold) 50%, var(--soft-lavender) 100%);
-            background-attachment: fixed; /* Background scroll nahi hoga, content hoga */
-            font-family: 'Quicksand', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #5d4a66;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            overflow: hidden;
         }
 
-        /* Border Sparkles */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border: 15px solid transparent;
-            border-image: radial-gradient(circle, white 10%, transparent 20%) 30;
-            pointer-events: none;
-            z-index: 100;
-            opacity: 0.3;
-        }
-
-        /* Layered Floating Petals */
+        /* Floating Petals */
         .petal {
-            position: fixed; /* Taaki scroll karne par bhi petals background mein rahein */
-            background-color: #ffb7c5;
-            border-radius: 150% 0 150% 0;
-            opacity: 0.6;
-            pointer-events: none;
-            z-index: 1;
-            animation: fall linear infinite;
+            position: absolute;
+            top: -10%;
+            width: 25px;
+            height: 25px;
+            background-image: url('https://i.ibb.co/2SdpQfC/petal.png');
+            background-size: cover;
+            animation: fall 8s infinite linear;
+            opacity: 0.8;
         }
-        .petal.blur { filter: blur(2px); opacity: 0.4; }
 
         @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            100% { transform: translateY(110vh) translateX(150px) rotate(720deg); opacity: 0; }
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(120vh) rotate(360deg); }
         }
 
-        /* Hero Content */
-        .hero-container {
+        /* Center Box */
+        .container {
             text-align: center;
-            z-index: 10;
-            animation: fadeIn 2.5s ease-out;
-            max-width: 900px;
-            padding: 4rem 2rem; /* Thoda padding badhaya scrollable feel ke liye */
-            position: relative;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-top: 8%;
+            color: #fff;
         }
 
         h1 {
-            font-family: 'Pacifico', cursive;
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            color: var(--deep-rose);
-            text-shadow: 0 4px 10px rgba(255, 77, 109, 0.2);
-            margin-bottom: 1rem;
-            animation: floatHeader 4s ease-in-out infinite;
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.2rem;
+            margin-bottom: -10px;
+            animation: fadeIn 2s ease-in-out;
         }
 
-        @keyframes floatHeader {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .typing-text {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            font-weight: 500;
-            min-height: 1.6em;
-            margin-bottom: 2rem;
-            font-family: 'Dancing Script', cursive;
-            color: #7d5a8a;
-        }
-
-        /* 3D Rose Area */
-        .rose-stage {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 0 auto 2.5rem;
-            perspective: 1000px;
-        }
-
-        .rose-stage::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 20px;
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0.05) 0%, transparent 70%);
-            filter: blur(5px);
-        }
-
-        .rose-inner {
-            width: 100%;
-            height: 100%;
-            animation: rotateRose 12s linear infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.4));
-        }
-
-        @keyframes rotateRose {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-
-        /* Heart Particles */
-        .heart-particle {
-            position: absolute;
-            font-size: 12px;
-            color: var(--rose-red);
-            pointer-events: none;
-            animation: riseHeart 3s ease-out forwards;
-        }
-
-        @keyframes riseHeart {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-        }
-
-        /* Music Toggle */
-        .music-player {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            z-index: 150;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 8px 15px;
-            border-radius: 30px;
-            backdrop-filter: blur(5px);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .music-player:hover { transform: scale(1.05); background: white; }
-
-        /* CTA Button */
-        .garden-btn {
-            background: linear-gradient(to right, var(--rose-red), var(--deep-rose));
-            color: white;
-            padding: 16px 45px;
-            border-radius: 50px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 700;
+        /* Typing Text */
+        #typedText {
             font-size: 1.3rem;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(201, 24, 74, 0.3);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 50px; /* Space for footer */
-        }
-
-        .garden-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 35px rgba(201, 24, 74, 0.5);
-        }
-
-        /* Teddy Section */
-        .teddy-wrapper {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            z-index: 120;
-            cursor: pointer;
-        }
-
-        .speech-bubble {
-            position: absolute;
-            bottom: 120%;
-            left: 20px;
-            background: white;
-            padding: 12px 18px;
-            border-radius: 20px;
-            font-size: 1rem;
-            width: 200px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            display: none;
-            animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            color: #5d4a66;
-            font-weight: 600;
-            border: 2px solid var(--soft-pink);
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        footer {
-            padding: 30px 0;
-            width: 100%;
-            text-align: center;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.3rem;
-            color: var(--deep-rose);
+            margin-top: 10px;
+            height: 30px;
             opacity: 0.9;
-            z-index: 10;
         }
 
-        /* Transition Overlay */
-        #page-transition {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.8s ease;
+        /* Button */
+        .btn {
+            margin-top: 40px;
+            background: #ffffffcc;
+            color: #d63384;
+            padding: 15px 35px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 0 15px #ffffff70;
+            transition: 0.3s;
         }
 
-        #page-transition.active {
-            opacity: 1;
-            pointer-events: auto;
+        .btn:hover {
+            background: #fff;
+            transform: scale(1.07);
+            box-shadow: 0 0 20px #fff;
+        }
+
+        /* Teddy */
+        .teddy {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 140px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Speech Bubble */
+        .bubble {
+            position: absolute;
+            bottom: 160px;
+            right: 20px;
+            background: #fff;
+            padding: 12px 18px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #d63384;
+            box-shadow: 0 0 10px #ffffff60;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <div id="page-transition">
-        <div style="text-align: center;">
-            <p style="font-family: 'Pacifico'; font-size: 2.5rem; color: var(--rose-red);">Opening the Garden for RuHi...</p>
-            <p style="font-family: 'Quicksand'; color: #7d5a8a;">Sona, please wait a moment 🌹</p>
-        </div>
+    <!-- 20 Petals -->
+    <script>
+        for (let i = 0; i < 20; i++) {
+            let petal = document.createElement("div");
+            petal.classList.add("petal");
+            petal.style.left = Math.random() * 100 + "vw";
+            petal.style.animationDuration = (6 + Math.random() * 4) + "s";
+            document.body.appendChild(petal);
+        }
+    </script>
+
+    <div class="container">
+        <h1>Happy Rose Day, RuHi...</h1>
+        <div id="typedText"></div>
+
+        <!-- Link to next page -->
+        <a href="rose.html" class="btn">Enter My Garden 🌹</a>
     </div>
 
-    <div class="music-player" onclick="toggleMusic()">
-        <span id="music-icon">🔇</span>
-        <div class="text-xs font-bold">
-            <p>Salaam Aaya — Instrumental</p>
-            <p class="text-pink-500">(For My RuHi)</p>
-        </div>
-        <audio id="bg-music" loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        </audio>
+    <!-- Teddy -->
+    <img src="https://i.ibb.co/4KfP2rb/teddy.png" class="teddy" id="teddy">
+
+    <div class="bubble" id="bubble">
+        Sona, aapke liye ek surprise andar chhupa hai…
     </div>
-
-    <div id="petals-container"></div>
-
-    <div class="hero-container">
-        <h1>Happy Rose Day, RuHi… 🌹</h1>
-        
-        <div class="rose-stage">
-            <div class="rose-inner" id="rose-3d">
-                <svg viewBox="0 0 100 100" width="180" height="180">
-                    <defs>
-                        <radialGradient id="roseGrad" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" style="stop-color:#ff758c" />
-                            <stop offset="100%" style="stop-color:#ff4d6d" />
-                        </radialGradient>
-                    </defs>
-                    <path d="M50 95 Q50 60 50 30" stroke="#2d6a4f" stroke-width="4" fill="none" />
-                    <path d="M50 70 Q70 60 80 70 Q70 85 50 70" fill="#2d6a4f" />
-                    <path d="M50 60 Q30 50 20 60 Q30 75 50 60" fill="#2d6a4f" />
-                    <circle cx="50" cy="30" r="28" fill="url(#roseGrad)" />
-                    <path d="M50 10 C30 10 25 30 50 45 C75 30 70 10 50 10" fill="#c9184a" opacity="0.8" />
-                    <path d="M50 15 C38 15 32 35 50 48 C68 35 62 15 50 15" fill="#ff4d6d" />
-                    <circle cx="50" cy="30" r="8" fill="#800f2f" opacity="0.4" />
-                </svg>
-            </div>
-        </div>
-
-        <p id="typing-subtext" class="typing-text"></p>
-
-        <button class="garden-btn" onclick="enterGarden()">
-            Enter My Garden 🌸
-        </button>
-    </div>
-
-    <div class="teddy-wrapper" onclick="toggleSpeech()">
-        <div id="speech" class="speech-bubble">Sona… aapke liye ek surprise andar chupa hai!</div>
-        <svg width="120" height="120" viewBox="0 0 100 100">
-            <circle cx="50" cy="40" r="22" fill="#d7ccc8" />
-            <circle cx="32" cy="25" r="8" fill="#d7ccc8" />
-            <circle cx="68" cy="25" r="8" fill="#d7ccc8" />
-            <circle cx="42" cy="35" r="2.5" fill="#3e2723" />
-            <circle cx="58" cy="35" r="2.5" fill="#3e2723" />
-            <circle cx="50" cy="42" r="4" fill="#8d6e63" />
-            <circle cx="50" cy="75" r="28" fill="#d7ccc8" />
-            <path d="M35 70 Q50 60 65 70" stroke="#3e2723" stroke-width="3" fill="none" />
-            <circle cx="65" cy="70" r="6" fill="#ff4d6d" />
-            <path d="M65 70 Q65 78 65 85" stroke="#2d6a4f" stroke-width="1.5" />
-        </svg>
-    </div>
-
-    <footer>
-        Made with infinite love, by your Rishu ❤️
-    </footer>
 
     <script>
-        const text = "Aaj main aapke liye ek digital rose garden lekar aaya hoon…";
-        let i = 0;
-        const speed = 80;
+        // Typing effect
+        const text = "Aaj main aapke liye ek digital rose garden lekar aaya hoon...";
+        let index = 0;
 
-        function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("typing-subtext").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
+        function type() {
+            if (index < text.length) {
+                document.getElementById("typedText").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(type, 60);
             }
         }
+        type();
 
-        function createPetals() {
-            const container = document.getElementById('petals-container');
-            for (let i = 0; i < 40; i++) {
-                const petal = document.createElement('div');
-                const isBlur = Math.random() > 0.7;
-                petal.className = `petal ${isBlur ? 'blur' : ''}`;
-                
-                const size = Math.random() * 15 + 8 + 'px';
-                petal.style.width = size;
-                petal.style.height = size;
-                petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.animationDuration = Math.random() * 4 + 6 + 's';
-                petal.style.animationDelay = Math.random() * 10 + 's';
-                
-                container.appendChild(petal);
-            }
-        }
-
-        function spawnHearts() {
-            const stage = document.querySelector('.rose-stage');
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.className = 'heart-particle';
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 60 + 20 + '%';
-                heart.style.top = '40%';
-                stage.appendChild(heart);
-                setTimeout(() => heart.remove(), 3000);
-            }, 1000);
-        }
-
-        let isMuted = true;
-        function toggleMusic() {
-            const audio = document.getElementById('bg-music');
-            const icon = document.getElementById('music-icon');
-            if (isMuted) {
-                audio.play();
-                icon.innerHTML = '🔊';
-                isMuted = false;
-            } else {
-                audio.pause();
-                icon.innerHTML = '🔇';
-                isMuted = true;
-            }
-        }
-
-        let speechTimeout;
-        function toggleSpeech() {
-            const speech = document.getElementById('speech');
-            speech.style.display = 'block';
-            clearTimeout(speechTimeout);
-            speechTimeout = setTimeout(() => {
-                speech.style.display = 'none';
-            }, 4000);
-        }
-
-        function enterGarden() {
-            const overlay = document.getElementById('page-transition');
-            overlay.classList.add('active');
-            
-            setTimeout(() => {
-                overlay.innerHTML = `
-                    <div style="text-align: center; animation: fadeIn 1s forwards; padding: 20px;">
-                        <h2 style="font-family: 'Pacifico'; font-size: 3rem; color: var(--rose-red);">Welcome to the Garden!</h2>
-                        <p style="font-family: 'Dancing Script'; font-size: 2rem; color: #7d5a8a;">Sona, this is just the beginning...</p>
-                        <div style="margin-top: 30px; font-size: 5rem;">🌹🌹🌹</div>
-                        <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: var(--rose-red); color: white; border-radius: 20px; border: none; cursor: pointer;">Go Back to Entry</button>
-                    </div>
-                `;
-            }, 2000);
-        }
-
-        window.onload = () => {
-            typeWriter();
-            createPetals();
-            spawnHearts();
-        };
+        // Teddy speech bubble
+        document.getElementById("teddy").addEventListener("click", () => {
+            const bubble = document.getElementById("bubble");
+            bubble.style.display = (bubble.style.display === "block") ? "none" : "block";
+        });
     </script>
+
 </body>
 </html>
