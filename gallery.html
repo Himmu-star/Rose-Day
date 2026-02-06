@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RuHi's Flower Gallery 🌸</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #880e4f;
+        }
+
+        /* Floating Petals Animation */
+        .petal {
+            position: fixed;
+            top: -10%;
+            z-index: 1;
+            pointer-events: none;
+            background: #ffc1e3;
+            border-radius: 150% 0 150% 0;
+            opacity: 0.6;
+            animation: drift linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(0) rotate(0deg); left: -10%; }
+            100% { transform: translateY(110vh) rotate(720deg); left: 110%; }
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 3rem 1rem 1rem;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            color: #c9184a;
+            text-shadow: 0 0 15px rgba(201, 24, 74, 0.2);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff85a1; }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #ff85a1, 0 0 30px #ff4d6d; }
+        }
+
+        /* Slider Container */
+        .slider-container {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            height: 400px;
+            margin: 2rem auto;
+            z-index: 10;
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            height: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flower-frame {
+            width: 100%;
+            height: 100%;
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(136, 14, 79, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+        }
+
+        .flower-frame:hover {
+            transform: scale(1.03);
+        }
+
+        .flower-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        /* Heart Ripple Effect */
+        .heart-ripple {
+            position: absolute;
+            pointer-events: none;
+            color: #ff4d6d;
+            font-size: 2rem;
+            animation: rippleHeart 0.8s ease-out forwards;
+        }
+
+        @keyframes rippleHeart {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #c9184a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 20;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-arrow:hover { background: white; transform: translateY(-50%) scale(1.1); }
+        .prev { left: -20px; }
+        .next { right: -20px; }
+
+        /* Typography */
+        .quote-section {
+            margin-top: 1rem;
+            text-align: center;
+            padding: 1rem;
+            z-index: 10;
+        }
+
+        .romantic-line {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            color: #880e4f;
+            position: relative;
+            display: inline-block;
+        }
+
+        .glowing-heart {
+            position: absolute;
+            font-size: 0.8rem;
+            color: #ff4d6d;
+            animation: pulseHeart 2s infinite;
+        }
+
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.5); opacity: 1; text-shadow: 0 0 10px #ff4d6d; }
+        }
+
+        .home-btn {
+            margin: 2rem 0 4rem;
+            padding: 14px 40px;
+            background: #ff4d6d;
+            color: white;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.3);
+            transition: all 0.4s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .home-btn:hover {
+            background: #c9184a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.5);
+        }
+
+        @media (max-width: 640px) {
+            .slider-container { height: 300px; }
+            .prev { left: 5px; }
+            .next { right: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Aapke liye laaye gaye phool… Sona ke liye ❤️</h1>
+    </header>
+
+    <div class="slider-container" id="sliderContainer">
+        <button class="nav-arrow prev" onclick="moveSlide(-1)">❮</button>
+        <button class="nav-arrow next" onclick="moveSlide(1)">❯</button>
+        
+        <div class="slider-track" id="sliderTrack">
+            <!-- Flower photos -->
+            <div class="slide">
+                <div class="flower-frame" onmousemove="createHeart(event)">
+                    <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=600" alt="Flower 1" class="flower-img">
+                </div>
+            </div>
+            <div class="slide">
+                <div class="flower-frame" onmousemove="createHeart(event)">
+                    <img src="https://images.unsplash.com/photo-1464852047516-749a2024b8bf?auto=format&fit=crop&q=80&w=600" alt="Flower 2" class="flower-img">
+                </div>
+            </div>
+            <div class="slide">
+                <div class="flower-frame" onmousemove="createHeart(event)">
+                    <img src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=600" alt="Flower 3" class="flower-img">
+                </div>
+            </div>
+            <div class="slide">
+                <div class="flower-frame" onmousemove="createHeart(event)">
+                    <img src="https://images.unsplash.com/photo-1455582916367-25f75bbe6739?auto=format&fit=crop&q=80&w=600" alt="Flower 4" class="flower-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quote-section">
+        <div class="romantic-line">
+            “Aapke liye jitne phool laaye hoon,<br>
+            unse zyada aap meri zindagi me khilti ho.”
+            <span class="glowing-heart" style="top:-10px; left:-15px;">❤️</span>
+            <span class="glowing-heart" style="bottom:-5px; right:-15px;">❤️</span>
+        </div>
+    </div>
+
+    <!-- Replaced Next button with Home button -->
+    <button class="home-btn" onclick="location.href='index.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Go to Home
+    </button>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Floating Petals Logic
+        function createPetals() {
+            const container = document.body;
+            for (let i = 0; i < 25; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                const size = Math.random() * 15 + 10;
+                petal.style.width = size + 'px';
+                petal.style.height = size + 'px';
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDuration = Math.random() * 5 + 5 + 's';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(petal);
+            }
+        }
+
+        // Slider Logic
+        let currentSlide = 0;
+        const track = document.getElementById('sliderTrack');
+        const totalSlides = document.querySelectorAll('.slide').length;
+
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            playMusic();
+        }
+
+        // Swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.getElementById('sliderContainer').addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById('sliderContainer').addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) moveSlide(1);
+            if (touchEndX - touchStartX > 50) moveSlide(-1);
+        });
+
+        // Heart Ripple on Hover
+        function createHeart(e) {
+            if (Math.random() > 0.9) { 
+                const frame = e.currentTarget;
+                const rect = frame.getBoundingClientRect();
+                const heart = document.createElement('div');
+                heart.className = 'heart-ripple';
+                heart.innerHTML = '❤️';
+                heart.style.left = (e.clientX - rect.left) + 'px';
+                heart.style.top = (e.clientY - rect.top) + 'px';
+                frame.appendChild(heart);
+                setTimeout(() => heart.remove(), 800);
+            }
+        }
+
+        // Audio Logic
+        let musicStarted = false;
+        function playMusic() {
+            if (!musicStarted) {
+                const music = document.getElementById('bgMusic');
+                music.volume = 0.2;
+                music.play().catch(() => {});
+                musicStarted = true;
+            }
+        }
+
+        createPetals();
+    </script>
+</body>
+</html>
